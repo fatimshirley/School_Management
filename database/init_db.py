@@ -9,6 +9,8 @@ def create_tables():
     CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT,
+        email TEXT UNIQUE,
+        password TEXT,
         role TEXT UNIQUE
     );
 
@@ -23,8 +25,9 @@ def create_tables():
 
     CREATE TABLE IF NOT EXISTS teachers (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        nom TEXT,
-        matiere TEXT UNIQUE
+        matiere TEXT UNIQUE,
+        nom TEXT
+        
     );
 
     CREATE TABLE IF NOT EXISTS subjects (
