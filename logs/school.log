@@ -1,2 +1,175 @@
 2026-06-09 11:09:07,171 [INFO] Etudiant ajouté : 22SPO0879
 2026-06-09 17:01:19,835 [INFO] Accès module professeurs
+2026-06-10 10:05:15,526 [INFO] Accès module professeurs
+2026-06-10 10:07:27,599 [INFO] Professeur ajouté : Dr Sidibé
+2026-06-10 11:14:07,044 [ERROR] Modification impossible : Informatique
+2026-06-11 14:27:00,103 [INFO] Accès module professeurs
+2026-06-11 14:27:19,619 [INFO] Accès module étudiants
+2026-06-11 14:27:30,625 [INFO] Accès module professeurs
+2026-06-11 16:53:48,124 [INFO] Accès module professeurs
+2026-06-11 16:55:26,321 [INFO] Accès module professeurs
+2026-06-11 17:03:34,367 [INFO] Accès module professeurs
+2026-06-12 09:49:26,995 [INFO] Accès module professeurs
+2026-06-12 10:00:54,085 [INFO] Accès module professeurs
+2026-06-12 10:01:00,298 [INFO] Matière ajoutée : Info
+2026-06-12 15:23:57,100 [INFO] Accès module utilisateurs
+2026-06-12 15:31:54,002 [INFO] Accès module utilisateurs
+2026-06-12 15:37:36,726 [INFO] Accès module utilisateurs
+2026-06-12 15:42:35,408 [INFO] Accès module utilisateurs
+2026-06-12 15:45:29,251 [INFO] Utilisateur ajouté : admin@gmail.com
+2026-06-12 15:45:39,349 [INFO] La liste des utilisateurs : 
+2026-06-12 15:54:10,265 [INFO] Accès module utilisateurs
+2026-06-12 15:54:15,272 [INFO] La liste des utilisateurs : 
+2026-06-12 15:54:30,361 [ERROR] Ajout impossible : un administrateur existe déjà.
+2026-06-15 10:58:46,103 [INFO] Accès module utilisateurs
+2026-06-15 10:59:45,904 [INFO] Utilisateur ajouté : etudiant@gmail.com
+2026-06-15 10:59:53,081 [INFO] La liste des utilisateurs : 
+2026-06-15 11:00:21,410 [INFO] La liste des utilisateurs : 
+2026-06-15 11:01:08,883 [INFO] Utilisateur ajouté : prof@gmail.com
+2026-06-15 11:01:12,310 [INFO] La liste des utilisateurs : 
+2026-06-15 11:01:40,628 [INFO] Accès module étudiants
+2026-06-15 11:04:16,651 [INFO] Accès module professeurs
+2026-06-15 11:05:05,622 [INFO] Accès module professeurs
+2026-06-15 11:05:23,570 [INFO] Accès module professeurs
+2026-06-15 11:05:44,751 [INFO] Matière ajoutée : Math
+2026-06-15 11:06:00,747 [INFO] Matière ajoutée : Compta
+2026-06-15 11:06:17,535 [INFO] Accès module professeurs
+2026-06-15 11:06:51,307 [INFO] Professeur ajouté : DR SIDIBE
+2026-06-15 11:07:15,308 [INFO] Recherche professeur : DR SIDIBE
+2026-06-15 11:08:00,367 [INFO] Accès module utilisateurs
+2026-06-15 11:08:04,458 [INFO] La liste des utilisateurs : 
+2026-06-15 11:11:47,316 [INFO] Accès module professeurs
+2026-06-15 11:26:28,464 [INFO] Accès module utilisateurs
+2026-06-15 11:26:31,307 [INFO] La liste des utilisateurs : 
+2026-06-15 12:02:22,776 [INFO] Accès module utilisateurs
+2026-06-15 12:03:01,068 [INFO] Utilisateur ajouté : etud@gmail.com
+2026-06-15 12:03:05,940 [INFO] La liste des utilisateurs : 
+2026-06-15 12:03:19,325 [INFO] Accès module étudiants
+2026-06-15 12:41:34,584 [INFO] Accès module utilisateurs
+2026-06-15 12:42:00,905 [INFO] Utilisateur ajouté : fat@gmail.com
+2026-06-15 12:42:14,364 [INFO] Accès module étudiants
+2026-06-15 15:34:24,215 [INFO] Accès module utilisateurs
+2026-06-15 15:34:46,785 [ERROR] Ajout impossible : fat@gmail.com existe déjà
+2026-06-15 15:34:57,765 [INFO] La liste des utilisateurs : 
+2026-06-15 15:35:12,100 [INFO] Accès module étudiants
+2026-06-15 15:35:54,659 [INFO] Accès module étudiants
+2026-06-15 16:36:42,188 [INFO] Accès module utilisateurs
+2026-06-15 16:40:50,543 [INFO] Accès module utilisateurs
+2026-06-15 16:41:41,701 [INFO] User ajouté : fat@gmail.com
+2026-06-15 16:41:52,913 [INFO] Accès module étudiants
+2026-06-15 16:49:38,700 [INFO] Accès module utilisateurs
+2026-06-15 16:50:33,491 [INFO] User ajouté : fatim@gmail.com
+2026-06-15 16:51:02,524 [INFO] Accès module étudiants
+2026-06-15 16:51:43,387 [INFO] Affichage de la liste des étudiants
+2026-06-16 10:32:34,415 [INFO] Accès module étudiants
+2026-06-16 10:52:51,798 [INFO] Accès module étudiants
+2026-06-16 10:53:28,186 [INFO] Etudiant ajouté : 22879
+2026-06-16 10:53:34,128 [INFO] Affichage de la liste des étudiants
+2026-06-16 10:56:11,016 [INFO] Affichage de la liste des étudiants
+2026-06-16 11:07:33,993 [INFO] Accès module étudiants
+2026-06-16 12:11:39,957 [INFO] Accès module étudiants
+2026-06-16 12:11:41,850 [INFO] Affichage de la liste des étudiants
+2026-06-16 12:41:55,817 [INFO] Affichage de la liste des étudiants
+2026-06-16 12:42:13,255 [INFO] Accès module utilisateurs
+2026-06-16 12:43:32,145 [INFO] User ajouté : sekofof@gmail.com
+2026-06-16 12:44:18,011 [INFO] Accès module utilisateurs
+2026-06-16 12:44:22,522 [INFO] Accès module étudiants
+2026-06-16 12:44:33,495 [INFO] Affichage de la liste des étudiants
+2026-06-16 12:45:41,719 [INFO] Accès module utilisateurs
+2026-06-16 12:46:30,119 [INFO] User ajouté : seryjean@gmail.com
+2026-06-16 12:46:40,789 [INFO] Accès module étudiants
+2026-06-16 12:48:04,616 [INFO] Etudiant ajouté : sekomohamed@gmail.com
+2026-06-16 13:05:39,447 [INFO] Accès module utilisateurs
+2026-06-16 14:42:37,219 [INFO] Accès module utilisateurs
+2026-06-16 14:42:43,018 [INFO] Liste utilisateurs affichée
+2026-06-16 14:44:16,102 [INFO] Utilisateur ajouté : fatoumata.sidibe011@iua.ci
+2026-06-16 14:44:20,127 [INFO] Liste utilisateurs affichée
+2026-06-16 14:44:26,922 [INFO] Accès module étudiants
+2026-06-16 14:44:34,247 [INFO] Accès module étudiants
+2026-06-16 14:44:57,553 [ERROR] Tous les champs doivent être remplis.
+2026-06-16 14:45:05,832 [ERROR] Tous les champs doivent être remplis.
+2026-06-16 14:50:14,784 [INFO] Etudiant ajouté via menu student
+2026-06-16 14:51:11,552 [INFO] Accès module utilisateurs
+2026-06-16 14:51:13,082 [INFO] Liste utilisateurs affichée
+2026-06-16 14:59:36,828 [INFO] Liste utilisateurs affichée
+2026-06-16 14:59:39,334 [INFO] Liste utilisateurs affichée
+2026-06-16 15:06:11,904 [INFO] Accès module étudiants
+2026-06-16 15:21:59,804 [INFO] Accès module étudiants
+2026-06-16 15:22:14,778 [ERROR] Étudiant introuvable
+2026-06-16 15:26:10,189 [INFO] Accès module étudiants
+2026-06-16 15:45:22,197 [INFO] Accès module étudiants
+2026-06-16 15:46:20,678 [INFO] Accès module utilisateurs
+2026-06-16 15:47:13,905 [ERROR] Validation user échouée : Email invalide.
+2026-06-16 15:48:10,826 [INFO] Étudiant créé : 22INF00879
+2026-06-16 15:48:11,287 [INFO] Utilisateur ajouté : fatimshirley@gmail.com
+2026-06-16 15:48:21,440 [INFO] Accès module étudiants
+2026-06-16 15:51:16,930 [ERROR] L'âge doit être un nombre.
+2026-06-16 15:51:16,931 [ERROR] L'âge doit être un nombre.
+2026-06-16 15:55:35,842 [INFO] Accès module utilisateurs
+2026-06-16 15:55:37,247 [INFO] Liste utilisateurs affichée
+2026-06-16 15:55:55,701 [INFO] Accès module professeurs
+2026-06-16 16:04:43,381 [INFO] Accès module professeurs
+2026-06-16 16:25:02,657 [INFO] Accès module professeurs
+2026-06-16 16:25:10,483 [INFO] Matière ajoutée : MATH
+2026-06-16 16:25:16,815 [INFO] Matière ajoutée : INFO
+2026-06-16 16:25:50,217 [INFO] Matière ajoutée : COMPTA
+2026-06-16 16:26:13,673 [INFO] Accès module professeurs
+2026-06-16 16:26:47,009 [INFO] Professeur ajouté : DR SYLLA
+2026-06-16 16:26:56,863 [ERROR] Suppression impossible : 
+2026-06-16 16:27:00,057 [INFO] Liste des professeurs affichée
+2026-06-16 16:27:46,426 [INFO] Accès module utilisateurs
+2026-06-16 16:27:49,689 [INFO] Liste utilisateurs affichée
+2026-06-17 12:27:12,282 [INFO] Accès module Notes
+2026-06-17 12:28:25,477 [INFO] Accès module Notes
+2026-06-17 12:53:00,458 [INFO] Accès module Notes
+2026-06-17 12:54:05,588 [INFO] Accès module Notes
+2026-06-17 13:12:13,020 [INFO] Accès module Notes
+2026-06-17 13:12:31,419 [INFO] Ajout note : étudiant=22INF00879, matière=MATH, note=20.0
+2026-06-17 13:12:55,290 [INFO] Accès module étudiants
+2026-06-17 15:12:38,875 [INFO] Accès module Absence
+2026-06-18 11:36:49,943 [INFO] Accès module utilisateurs
+2026-06-18 11:36:51,591 [INFO] Accès module utilisateurs
+2026-06-18 11:37:15,189 [INFO] Accès module connexion
+2026-06-18 12:04:37,913 [INFO] Accès module étudiants
+2026-06-18 12:57:42,374 [INFO] Accès module utilisateurs
+2026-06-18 12:57:44,946 [INFO] Liste utilisateurs affichée
+2026-06-18 13:00:42,473 [INFO] Accès module utilisateurs
+2026-06-18 13:00:44,390 [INFO] Liste utilisateurs affichée
+2026-06-18 13:00:52,124 [INFO] Accès module étudiants
+2026-06-18 13:07:38,713 [INFO] Accès module statistiques
+2026-06-18 13:07:40,789 [INFO] Calcul meilleur étudiant effectué
+2026-06-18 13:07:49,322 [INFO] Calcul total absences
+2026-06-19 12:26:39,965 [INFO] Connexion : nom=ADMIN, email=admin@gmail.com, role=admin
+2026-06-19 12:27:26,226 [INFO] Accès module Absence
+2026-06-19 12:28:52,859 [INFO] Connexion étudiant : nom=SIDIBE, matricule=22INF00879, email=fatimshirley@gmail.com
+2026-06-19 12:29:31,975 [INFO] Connexion : nom=ADMIN, email=admin@gmail.com, role=admin
+2026-06-19 12:30:03,769 [INFO] Accès module utilisateurs
+2026-06-19 12:30:07,287 [INFO] Liste utilisateurs affichée
+2026-06-19 12:30:33,614 [INFO] Connexion : nom=ADMIN, email=admin@gmail.com, role=admin
+2026-06-19 12:30:36,853 [INFO] Accès module utilisateurs
+2026-06-19 12:30:38,683 [INFO] Liste utilisateurs affichée
+2026-06-19 12:30:55,275 [INFO] Accès module matières
+2026-06-19 12:31:21,932 [INFO] Accès module étudiants
+2026-06-19 12:32:24,892 [ERROR] Tous les champs doivent être remplis.
+2026-06-19 12:32:24,892 [ERROR] Tous les champs doivent être remplis.
+2026-06-19 12:47:16,407 [INFO] Connexion : nom=ADMIN, email=admin@gmail.com, role=admin
+2026-06-19 12:47:32,951 [INFO] Accès module étudiants
+2026-06-19 14:17:21,047 [INFO] Accès module professeurs
+2026-06-19 14:19:50,250 [INFO] Liste professeurs affichée : total=1
+2026-06-19 15:22:31,711 [ERROR] Tentative de connexion échouée : drsylla@gmaail.com
+2026-06-19 15:22:54,787 [ERROR] Tentative de connexion échouée : admin@gmail.com
+2026-06-19 15:23:26,109 [INFO] Connexion : nom=ADMIN, email=admin@gmail.com, role=admin
+2026-06-19 15:23:31,124 [INFO] Accès module professeurs
+2026-06-19 15:23:34,504 [INFO] Liste professeurs affichée : total=1
+2026-06-19 15:23:43,907 [INFO] Accès module utilisateurs
+2026-06-19 15:23:46,454 [INFO] Liste utilisateurs affichée
+2026-06-19 15:24:41,911 [INFO] Connexion : nom=ADMIN, email=admin@gmail.com, role=admin
+2026-06-19 15:24:46,754 [INFO] Accès module professeurs
+2026-06-19 15:24:49,478 [INFO] Liste professeurs affichée : total=1
+2026-06-19 15:33:00,634 [INFO] Professeur ajouté : PROFA 
+2026-06-19 15:33:21,240 [INFO] Liste professeurs affichée : total=2
+2026-06-19 15:34:02,203 [INFO] Connexion : nom=PROFA , email=prof@gmail.com, role=professeur
+2026-06-19 15:40:22,315 [INFO] Connexion : nom=PROFA , email=prof@gmail.com, role=professeur
+2026-06-19 15:41:31,351 [INFO] Ajout note : étudiant=1, matière=2, note=14.0
+2026-06-22 12:16:37,038 [INFO] Connexion : nom=ADMIN, email=admin@gmail.com, role=admin
+2026-06-22 12:18:30,981 [INFO] Accès module étudiants

@@ -3,248 +3,218 @@ from models.teacher import Teacher
 from utils.console import clear
 from utils.logger import log_info, log_error
 from utils.validator import valider_professeur
-
 import sqlite3
 
-def menu_teacher():
-        while True :
-            clear()
-
-            print("\n  PROFESSEUR")
-            print("1. Ajouter")
-            print("2. Modifier")
-            print("3. Supprimer")
-            print("4. Rechercher")
-            print("0. Quitter")
-            
-            choix = input("Choix : ").strip()
-
-            if choix == "1":
-               matiere = input("Matière : ")
-               nom = input("Nom : ")
-               
-               professeur = Teacher(matiere, nom)
-               ajouter_professeur(professeur)
-               
-               input("Appuyez sur entrée...")
 
 
-            elif choix == "2":
-                ancienne_matiere = input("Ancienne matière : ")
-                nouvelle_matiere = input("Nouvelle matière : ")
-                nom = input("Nouveau nom : ")
-                
-                professeur = Teacher (nouvelle_matiere, nom)
+def create_teacher(conn, user_id, nom, subject_id):
 
+    teacher = Teacher(user_id, nom, subject_id)
 
-                modifier_professeur(ancienne_matiere, professeur)
-                input("Appuyez sur entrée...")
-
-            
-
-            elif choix == "3":
-                matiere = input("Matière: ")
-                supprimer_professeur(matiere)
-                input("Appuyez sur entrée...")
-        
-
-            elif choix == "4":
-                matiere = input("Matière: ")
-                professeur = rechercher_professeurs(matiere)
-
-                if professeur:
-                    print(f"""
-                    Matière : {professeur[0]}
-                    Nom : {professeur[1]}
-                """)
-                    
-                else:
-                    print("Aucun professeur trouvé.")
-
-                input("Appuyez sur entrée...")
-            
-        
-
-            elif choix == "0":
-                print("Au revoir")
-                input("Appuyez sur entrée...")
-                break
-
-            else: 
-                print("Choix invalide")
-                input("Appuyez sur Entrée...")
-
-
-
-def ajouter_professeur(professeur):
-    erreur = valider_professeur(professeur)
+    erreur = valider_professeur(teacher)
     if erreur:
-        print(erreur)
-        return
- 
+        raise ValueError(erreur)
+
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT id FROM teachers WHERE nom = ?
+    """, (nom,))
+
+    if cursor.fetchone():
+        raise ValueError("Ce professeur existe déjà.")
+
+    cursor.execute("""
+        INSERT INTO teachers (user_id, nom, subject_id)
+        VALUES (?, ?, ?)
+    """, (user_id, nom, subject_id))
+
+
+
+def ajouter_professeur(nom, email, password, subject_name):
     conn = get_connection()
     cursor = conn.cursor()
+
     try:
+        cursor.execute("SELECT id FROM subjects WHERE nom = ?", (subject_name,))
+        subject = cursor.fetchone()
+
+        if not subject:
+            print("Matière inexistante.")
+            return
+
+        subject_id = subject[0]
+
+        cursor.execute("SELECT id FROM users WHERE email = ?", (email,))
+        user = cursor.fetchone()
+
+        if user:
+            user_id = user[0]
+        else:
+            cursor.execute("""
+                INSERT INTO users (name, email, password, role)
+                VALUES (?, ?, ?, 'professeur')
+            """, (nom, email, password))
+            user_id = cursor.lastrowid
+
         cursor.execute("""
-            INSERT INTO teachers
-            (matiere, nom)
-            VALUES (?, ?)
-         """, (
-            professeur.matiere,
-            professeur.nom
-        ))
-    
-             
+            INSERT INTO teachers (user_id, nom, subject_id)
+            VALUES (?, ?, ?)
+        """, (user_id, nom, subject_id))
 
         conn.commit()
-
         print("Professeur ajouté avec succès.")
-        log_info(
-        f"Professeur ajouté : {professeur.matiere}"
-    )
+        log_info(f"Professeur ajouté : {nom}")
 
-    except sqlite3.IntegrityError:
-        log_error(
-            f"Ajout impossible : {professeur.matiere}"
-        )
-        print("Cette matière exixte déjà.")
-
-    except Exception as e :
-        log_error(
-            f"Erreur ajout professeur : {e}"
-        )
+    except Exception as e:
+        conn.rollback()
         print(f"Erreur : {e}")
+        log_error(str(e))
 
-    finally :
-        conn.close()#ferme
+    finally:
+        conn.close()
 
 
-def modifier_professeur( ancienne_matiere, professeur):
-   
-    if not ancienne_matiere:
-        print("L'ancienne matière ne peut pas etre vide.")
-        return
-
-    erreur = valider_professeur(professeur)
-    if erreur:
-        print(erreur)
-        return
-
+def modifier_professeur(ancien_nom, nouveau_nom, subject_name):
     conn = get_connection()
     cursor = conn.cursor()
 
     try:
+        cursor.execute("SELECT id FROM subjects WHERE nom = ?", (subject_name,))
+        subject = cursor.fetchone()
+
+        if not subject:
+            print("Matière inexistante.")
+            return
+
+        subject_id = subject[0]
+
         cursor.execute("""
             UPDATE teachers
-            SET matiere = ?, nom = ?
-            WHERE matiere = ?
-        """, (professeur.matiere, 
-            professeur.nom,
-            ancienne_matiere)
-    )
+            SET nom = ?, subject_id = ?
+            WHERE nom = ?
+        """, (nouveau_nom, subject_id, ancien_nom))
+
         conn.commit()
 
         if cursor.rowcount == 0:
-            print("Aucun professeur trouvé.")
-            log_error(
-                f"Modification impossible : {ancienne_matiere}"
-        )
+            print("Professeur introuvable.")
         else:
-            print("Professeur modifié avec succès")
-            log_error(
-                f"Modification : {ancienne_matiere} -> {professeur.matiere}"
-        )
-
-    except sqlite3.IntegrityError :
-        log_error(
-            f"Modification refusée : {professeur.matiere}"
-        )
-        print("Cette matière existe")
+            print("Professeur modifié avec succès.")
 
     except Exception as e:
-        log_error(
-            f"Erreur modification professeur : {e}"
-        )
+        conn.rollback()
         print(f"Erreur : {e}")
 
     finally:
         conn.close()
 
 
-
-def supprimer_professeur(matiere):
-
-    if not matiere:
-        print("La matière ne peut pas être vide.") 
-        return
-    
-
-    conn =get_connection()
-    cursor = conn.cursor()
-    
-    try:
-        cursor.execute ("""
-            DELETE FROM teachers
-            WHERE matiere = ?
-        """, (matiere,))
-
-        conn.commit()
-
-        if cursor.rowcount == 0:
-            print("Auncun professeur trouvé.")
-            log_error(
-                f"Suppression impossible : ; {matiere}"
-            )
-        else:
-            print("Professeur  supprimé")          
-            log_info(
-                f"Professeur supprimé : {matiere}"
-                )
-    except Exception as e :
-        log_error(
-            f"Erreur suppression : {e}"
-        )
-        print(f"Erreur : {e}")
-    
-    finally:
-        conn.close()
-
-    
-
-def rechercher_professeurs(matiere):
-
-    if not matiere: 
-        print("La matière ne peut pas être vide.") 
-        return None
-
+def supprimer_professeur(nom):
     conn = get_connection()
     cursor = conn.cursor()
 
-       
-    try :
-        cursor.execute("""
-            SELECT * FROM teachers
-            WHERE matiere = ?
-        """, (matiere,))
+    try:
+        cursor.execute("DELETE FROM teachers WHERE nom = ?", (nom,))
+        conn.commit()
 
-        professeur = cursor.fetchone()
-        
-        if professeur:
+        if cursor.rowcount == 0:
+            print("Professeur introuvable.")
+        else:
+            print("Professeur supprimé.")
+
+    finally:
+        conn.close()
+
+
+def rechercher_professeur(nom):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute("""
+            SELECT id, user_id, nom, subject_id
+            FROM teachers
+            WHERE nom = ?
+        """, (nom,))
+
+        prof = cursor.fetchone()
+        if prof:
             log_info(
-                f"Recherche professeur : {matiere}"
+                f"Recherche professeur : {nom}"
             )
 
-        return professeur
-    
-    except Exception as e:
-        log_error(
-            f"Erreur recherche professeur : {e}"
+        return prof
+
+    finally:
+        conn.close()
+
+
+def lister_professeurs():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute("""
+            SELECT id, user_id, nom, subject_id
+            FROM teachers
+        """)
+
+        rows = cursor.fetchall()
+        log_info(
+            f"Liste professeurs affichée : total={len(rows)}"
         )
-        print("Une erreur est survenue.")
-        return None
-    
+
+        for r in rows:
+            print(r)
+
     finally:
         conn.close()
 
 
 
+def menu_teacher():
+    while True:
+        clear()
+
+        print("\n===== PROFESSEURS =====")
+        print("1. Ajouter professeur")
+        print("2. Modifier professeur")
+        print("3. Supprimer professeur")
+        print("4. Rechercher professeur")
+        print("5. Lister professeurs")
+        print("0. Retour")
+
+        choix = input("Choix : ").strip()
+
+        if choix == "1":
+            nom = input("Nom : ")
+            email = input("Email : ")
+            password = input("Password : ")
+            subject_name = input("Matière : ")
+            ajouter_professeur(nom, email, password, subject_name)
+
+        elif choix == "2":
+            ancien = input("Ancien nom : ")
+            nouveau = input("Nouveau nom : ")
+            subject = input("Matière : ")
+            modifier_professeur(ancien, nouveau, subject)
+
+        elif choix == "3":
+            nom = input("Nom : ")
+            supprimer_professeur(nom)
+
+        elif choix == "4":
+            nom = input("Nom : ")
+            print(rechercher_professeur(nom))
+
+        elif choix == "5":
+            lister_professeurs()
+
+        elif choix == "0":
+            break
+
+        else:
+            print("Choix invalide")
+
+        input("\nEntrée...")
