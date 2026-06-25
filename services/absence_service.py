@@ -6,6 +6,9 @@ from utils.validator import valider_absence
 import sqlite3
 
 
+# =========================================================
+# MENU ABSENCE
+# =========================================================
 def menu_absence():
     while True:
         print("\n===== MENU ABSENCE =====")
@@ -16,24 +19,93 @@ def menu_absence():
 
         choix = input("Choix : ").strip()
 
+        # =====================================================
+        # ENREGISTRER ABSENCE
+        # =====================================================
         if choix == "1":
-            student_id = int(input("ID étudiant : "))
-            date = input("Date (AAAA-MM-JJ) : ")
-            statut = input("Statut (justifiee/non justifiee) : ").lower()
 
-            enregistrer_absence(student_id, date, statut)
+            matricule = input("Matricule étudiant : ").strip()
+            date = input("Date (AAAA-MM-JJ) : ").strip()
+            statut = input(
+                "Statut (justifiee/non justifiee) : "
+            ).strip().lower()
 
+            conn = get_connection()
+            cursor = conn.cursor()
+
+            cursor.execute(
+                "SELECT id FROM students WHERE matricule = ?",
+                (matricule,)
+            )
+
+            student = cursor.fetchone()
+
+            conn.close()
+
+            if not student:
+                print("Etudiant introuvable.")
+            else:
+                enregistrer_absence(
+                    student[0],
+                    date,
+                    statut
+                )
+
+        # =====================================================
+        # MODIFIER ABSENCE
+        # =====================================================
         elif choix == "2":
-            student_id = int(input("ID étudiant : "))
-            date = input("Date (AAAA-MM-JJ) : ")
-            statut = input("Statut (justifiee/non justifiee) : ").lower()
 
-            marquer_absence(student_id, date, statut)
+            matricule = input("Matricule étudiant : ").strip()
+            date = input("Date (AAAA-MM-JJ) : ").strip()
+            statut = input(
+                "Statut (justifiee/non justifiee) : "
+            ).strip().lower()
 
+            conn = get_connection()
+            cursor = conn.cursor()
+
+            cursor.execute(
+                "SELECT id FROM students WHERE matricule = ?",
+                (matricule,)
+            )
+
+            student = cursor.fetchone()
+
+            conn.close()
+
+            if not student:
+                print("Étudiant introuvable.")
+            else:
+                marquer_absence(
+                    student[0],
+                    date,
+                    statut
+                )
+
+        # =====================================================
+        # CONSULTER HISTORIQUE
+        # =====================================================
         elif choix == "3":
-            student_id = int(input("ID étudiant : "))
 
-            consulter_historique(student_id)
+            matricule = input("Matricule étudiant : ").strip()
+
+            conn = get_connection()
+            cursor = conn.cursor()
+
+            cursor.execute(
+                "SELECT id FROM students WHERE matricule = ?",
+                (matricule,)
+            )
+
+            student = cursor.fetchone()
+
+            conn.close()
+
+            if not student:
+                print("Étudiant introuvable.")
+            else:
+                consulter_historique(student[0])
 
         elif choix == "0":
             break
@@ -44,12 +116,21 @@ def menu_absence():
         input("Appuyez sur Entrée pour continuer...")
 
 
+# =========================================================
+# ENREGISTRER ABSENCE
+# =========================================================
 def enregistrer_absence(student_id, date, statut):
+
     conn = get_connection()
     cursor = conn.cursor()
 
     try:
-        absence = Absence(student_id, date, statut)
+
+        absence = Absence(
+            student_id,
+            date,
+            statut
+        )
 
         erreur = valider_absence(absence)
 
@@ -58,7 +139,11 @@ def enregistrer_absence(student_id, date, statut):
             return
 
         cursor.execute("""
-            INSERT INTO absences (student_id, date, statut)
+            INSERT INTO absences (
+                student_id,
+                date,
+                statut
+            )
             VALUES (?, ?, ?)
         """, (
             absence.student_id,
@@ -69,11 +154,16 @@ def enregistrer_absence(student_id, date, statut):
         conn.commit()
 
         print("Absence enregistrée avec succès.")
+
         log_info(
-            f"Absence ajoutée : étudiant={student_id}, date={date}, statut={statut}"
+            f"Absence ajoutée : "
+            f"étudiant={student_id}, "
+            f"date={date}, "
+            f"statut={statut}"
         )
 
     except sqlite3.Error as e:
+
         print("Erreur lors de l'enregistrement.")
         log_error(f"Erreur absence : {e}")
 
@@ -81,15 +171,21 @@ def enregistrer_absence(student_id, date, statut):
         conn.close()
 
 
+# =========================================================
+# MODIFIER ABSENCE
+# =========================================================
 def marquer_absence(student_id, date, statut):
+
     conn = get_connection()
     cursor = conn.cursor()
 
     try:
+
         cursor.execute("""
             UPDATE absences
             SET statut = ?
-            WHERE student_id = ? AND date = ?
+            WHERE student_id = ?
+            AND date = ?
         """, (
             statut,
             student_id,
@@ -99,26 +195,40 @@ def marquer_absence(student_id, date, statut):
         conn.commit()
 
         if cursor.rowcount > 0:
+
             print("Absence mise à jour avec succès.")
+
             log_info(
-                f"Modification absence : étudiant={student_id}, date={date}, statut={statut}"
+                f"Modification absence : "
+                f"étudiant={student_id}, "
+                f"date={date}, "
+                f"statut={statut}"
             )
+
         else:
             print("Aucune absence trouvée.")
 
     except sqlite3.Error as e:
+
         print("Erreur lors de la modification.")
-        log_error(f"Erreur modification absence : {e}")
+        log_error(
+            f"Erreur modification absence : {e}"
+        )
 
     finally:
         conn.close()
 
 
+# =========================================================
+# HISTORIQUE ABSENCES
+# =========================================================
 def consulter_historique(student_id):
+
     conn = get_connection()
     cursor = conn.cursor()
 
     try:
+
         cursor.execute("""
             SELECT date, statut
             FROM absences
@@ -127,8 +237,10 @@ def consulter_historique(student_id):
         """, (student_id,))
 
         absences = cursor.fetchall()
+
         log_info(
-            f"Consultation historique absences : étudiant={student_id}"
+            f"Consultation historique absences : "
+            f"étudiant={student_id}"
         )
 
         if not absences:
@@ -138,19 +250,25 @@ def consulter_historique(student_id):
         print("\n===== HISTORIQUE DES ABSENCES =====")
 
         for date, statut in absences:
-            print(f"Date : {date} | Statut : {statut}")
+            print(
+                f"Date : {date} | "
+                f"Statut : {statut}"
+            )
 
     except sqlite3.Error as e:
+
         print("Erreur lors de la consultation.")
-        log_error(f"Erreur historique absence : {e}")
+        log_error(
+            f"Erreur historique absence : {e}"
+        )
 
     finally:
         conn.close()
 
 
-
-
-
+# =========================================================
+# CONSULTATION ABSENCES ETUDIANT
+# =========================================================
 def consulter_absences_etudiant(student_id):
 
     conn = get_connection()
@@ -166,8 +284,10 @@ def consulter_absences_etudiant(student_id):
         """, (student_id,))
 
         absences = cursor.fetchall()
+
         log_info(
-            f"Consultation absences : étudiant={student_id}"
+            f"Consultation absences : "
+            f"étudiant={student_id}"
         )
 
         if not absences:
@@ -177,10 +297,16 @@ def consulter_absences_etudiant(student_id):
         print("\n===== ABSENCES =====")
 
         for date, statut in absences:
-            print(f"Date : {date} | Statut : {statut}")
+            print(
+                f"Date : {date} | "
+                f"Statut : {statut}"
+            )
 
     except sqlite3.Error as e:
-        log_error(f"Erreur consultation absences : {e}")
+
+        log_error(
+            f"Erreur consultation absences : {e}"
+        )
 
     finally:
         conn.close()

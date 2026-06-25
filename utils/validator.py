@@ -1,3 +1,8 @@
+from datetime import datetime
+
+import unicodedata #sert à manipuler les caractères Unicode, notamment pour supprimer les accents
+
+
 def valider_etudiant(etudiant):
 
     if (
@@ -84,6 +89,8 @@ def valider_grade(grade):
     return None
 
 
+
+
 def valider_absence(absence):
 
     if absence.student_id is None:
@@ -92,7 +99,23 @@ def valider_absence(absence):
     if not absence.date:
         return "La date est obligatoire."
 
-    if absence.statut not in ("justifiee", "non justifiee"):
+    # Validation stricte AAAA-MM-JJ
+    try:
+        datetime.strptime(absence.date, "%Y-%m-%d")
+    except ValueError:
+        return "La date doit être au format AAAA-MM-JJ."
+
+    # Normalisation du statut
+    statut = absence.statut.strip().lower()
+
+    statut = ''.join(
+        c for c in unicodedata.normalize('NFD', statut)
+        if unicodedata.category(c) != 'Mn'
+    )
+
+    if statut not in ("justifiee", "non justifiee"):
         return "Statut invalide."
+
+    absence.statut = statut
 
     return None

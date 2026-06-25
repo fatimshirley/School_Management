@@ -102,10 +102,13 @@ def calculer_moyenne_etudiant(student_id):
         resultat = cursor.fetchone()
 
         if resultat and resultat[0] is not None:
+            moyenne = round(resultat[0], 2)
+
             log_info(
-                f"Calcul moyenne : étudiant={student_id}, moyenne={round(resultat[0], 2)}"
+                f"Calcul moyenne : étudiant={student_id}, moyenne={moyenne}"
             )
-            return round(resultat[0], 2)
+
+            return moyenne
 
         return None
 
@@ -115,59 +118,6 @@ def calculer_moyenne_etudiant(student_id):
 
     finally:
         conn.close()
-
-
-def menu_grade():
-    while True:
-        print("\n===== MENU NOTES =====")
-        print("1. Ajouter une note")
-        print("2. Modifier une note")
-        print("3. Supprimer une note")
-        print("4. Calculer la moyenne d'un étudiant")
-        print("0. Retour")
-
-        choix = input("Choix : ").strip()
-
-        if choix == "1":
-            student_id = int(input("ID étudiant : "))
-            subject_id = int(input("ID matière : "))
-            note = float(input("Note : "))
-
-            ajouter_note(student_id, subject_id, note)
-
-        elif choix == "2":
-            student_id = int(input("ID étudiant : "))
-            subject_id = int(input("ID matière : "))
-            note = float(input("Nouvelle note : "))
-
-            modifier_note(student_id, subject_id, note)
-
-        elif choix == "3":
-            student_id = int(input("ID étudiant : "))
-            subject_id = int(input("ID matière : "))
-
-            supprimer_note(student_id, subject_id)
-
-        elif choix == "4":
-            student_id = int(input("ID étudiant : "))
-
-            moyenne = calculer_moyenne_etudiant(student_id)
-
-            if moyenne is not None:
-                print(f"Moyenne : {moyenne}/20")
-            else:
-                print("Aucune note trouvée.")
-
-        elif choix == "0":
-            break
-
-        else:
-            print("Choix invalide.")
-
-        input("Appuyez sur Entrée pour continuer...")
-
-
-
 
 
 def consulter_notes_etudiant(student_id):
@@ -200,3 +150,163 @@ def consulter_notes_etudiant(student_id):
 
     finally:
         conn.close()
+
+
+def menu_grade():
+    while True:
+
+        print("\n===== MENU NOTES =====")
+        print("1. Ajouter une note")
+        print("2. Modifier une note")
+        print("3. Supprimer une note")
+        print("4. Calculer la moyenne d'un étudiant")
+        print("0. Retour")
+
+        choix = input("Choix : ").strip()
+
+        
+        if choix == "1":
+
+            matricule = input("Matricule étudiant : ").strip()
+            matiere = input("Matière : ").strip()
+
+            try:
+                note = float(input("Note : "))
+            except ValueError:
+                print("Note invalide.")
+                input("Appuyez sur Entrée pour continuer...")
+                continue
+
+            conn = get_connection()
+            cursor = conn.cursor()
+
+            cursor.execute(
+                "SELECT id FROM students WHERE matricule = ?",
+                (matricule,)
+            )
+            student = cursor.fetchone()
+
+            if not student:
+                print("Étudiant introuvable.")
+                conn.close()
+                input("Appuyez sur Entrée pour continuer...")
+                continue
+
+            cursor.execute(
+                "SELECT id FROM subjects WHERE nom = ?",
+                (matiere,)
+            )
+            subject = cursor.fetchone()
+
+            if not subject:
+                print("Matière introuvable.")
+                conn.close()
+                input("Appuyez sur Entrée pour continuer...")
+                continue
+
+            conn.close()
+
+            ajouter_note(student[0], subject[0], note)
+
+        
+        elif choix == "2":
+
+            matricule = input("Matricule étudiant : ").strip()
+            matiere = input("Matière : ").strip()
+
+            try:
+                note = float(input("Nouvelle note : "))
+            except ValueError:
+                print("Note invalide.")
+                input("Appuyez sur Entrée pour continuer...")
+                continue
+
+            conn = get_connection()
+            cursor = conn.cursor()
+
+            cursor.execute(
+                "SELECT id FROM students WHERE matricule = ?",
+                (matricule,)
+            )
+            student = cursor.fetchone()
+
+            cursor.execute(
+                "SELECT id FROM subjects WHERE nom = ?",
+                (matiere,)
+            )
+            subject = cursor.fetchone()
+
+            conn.close()
+
+            if not student or not subject:
+                print("Étudiant ou matière introuvable.")
+                input("Appuyez sur Entrée pour continuer...")
+                continue
+
+            modifier_note(student[0], subject[0], note)
+
+        
+        elif choix == "3":
+
+            matricule = input("Matricule étudiant : ").strip()
+            matiere = input("Matière : ").strip()
+
+            conn = get_connection()
+            cursor = conn.cursor()
+
+            cursor.execute(
+                "SELECT id FROM students WHERE matricule = ?",
+                (matricule,)
+            )
+            student = cursor.fetchone()
+
+            cursor.execute(
+                "SELECT id FROM subjects WHERE nom = ?",
+                (matiere,)
+            )
+            subject = cursor.fetchone()
+
+            conn.close()
+
+            if not student or not subject:
+                print("Étudiant ou matière introuvable.")
+                input("Appuyez sur Entrée pour continuer...")
+                continue
+
+            supprimer_note(student[0], subject[0])
+
+        
+        elif choix == "4":
+
+            matricule = input("Matricule étudiant : ").strip()
+
+            conn = get_connection()
+            cursor = conn.cursor()
+
+            cursor.execute(
+                "SELECT id FROM students WHERE matricule = ?",
+                (matricule,)
+            )
+
+            student = cursor.fetchone()
+            conn.close()
+
+            if not student:
+                print("Étudiant introuvable.")
+                input("Appuyez sur Entrée pour continuer...")
+                continue
+
+            moyenne = calculer_moyenne_etudiant(student[0])
+
+            if moyenne is not None:
+                print(f"Moyenne : {moyenne}/20")
+            else:
+                print("Aucune note trouvée.")
+
+        elif choix == "0":
+            break
+
+        else:
+            print("Choix invalide.")
+
+        input("Appuyez sur Entrée pour continuer...")

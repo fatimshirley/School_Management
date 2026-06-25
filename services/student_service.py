@@ -24,8 +24,8 @@ def create_student(conn, user_id, matricule, nom, prenom, age, classe):
 
     if cursor.fetchone():
         msg = "Matricule déjà utilisé"
-        log_error(msg)
         print(f"[ERREUR] {msg}")
+        log_error(msg)
         raise ValueError(msg)
 
     cursor.execute("""
@@ -40,7 +40,7 @@ def create_student(conn, user_id, matricule, nom, prenom, age, classe):
         etudiant.classe
     ))
 
-    print("Etudiant créé avec succès")
+
     log_info(f"Étudiant créé : {matricule}")
 
 
@@ -69,12 +69,12 @@ def ajouter_etudiant(nom, prenom, age, classe, matricule, email, password):
 
             
         print("Nouvel utilisateur créé")
-        print("Etudiant ajouté avec succès")
         log_info(f"Etudiant ajouté : {matricule}, nom={nom} {prenom}")
 
     except ValueError as e:
         conn.rollback()
         log_error(str(e))
+        print(f"[ERREUR] {e}")
 
     except sqlite3.IntegrityError:
         conn.rollback()
@@ -233,7 +233,7 @@ def menu_students():
                 continue
 
             ajouter_etudiant(nom, prenom, age, classe, matricule, email, password)
-            input("Appuyez sur entrée...")
+            
 
 
         elif choix == "2":
@@ -245,32 +245,32 @@ def menu_students():
             nouveau = input("Nouveau matricule : ")
 
             modifier_etudiant(ancien, nom, prenom, age, classe, nouveau)
-            input("Appuyez sur entrée...")
+            
 
 
         elif choix == "3":
             matricule = input("Matricule : ")
             supprimer_etudiant(matricule)
-            input("Appuyez sur entrée...")
+            
 
 
         elif choix == "4":
+            matricule = input("Matricule : ")
             etudiant = rechercher_etudiant(matricule)
-            input("Appuyez sur entrée...")
 
             if etudiant:
                 print(etudiant)
             else:
                 print("[INFO] Étudiant introuvable")
-            input("Appuyez sur entrée...")
+            
 
         elif choix == "5":
             print("\n LA LISTE DES ETUDIANTS")
-            lister_etudiants()
+            
 
         elif choix == "0":
             break
 
         else:
             print("Choix invalide")
-        input("Appuyez sur entrée...")
+        input("\nAppuyez sur Entrée pour continuer...")    
