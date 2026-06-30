@@ -7,9 +7,6 @@ from services.student_service import create_student
 import sqlite3
 
 
-# =========================================================
-# MENU USERS
-# =========================================================
 def menu_users():
     while True:
         clear()
@@ -50,9 +47,6 @@ def menu_users():
             input("\nEntrée...")
 
 
-# =========================================================
-# AJOUT UTILISATEUR
-# =========================================================
 def ajouter_utilisateur(user):
 
     erreur = valider_utilisateur(user)
@@ -65,9 +59,7 @@ def ajouter_utilisateur(user):
     cursor = conn.cursor()
 
     try:
-        # =========================
-        # UNIQUE ADMIN
-        # =========================
+      
         if user.role == "admin":
             cursor.execute("""
                 SELECT id FROM users WHERE role = 'admin'
@@ -76,9 +68,6 @@ def ajouter_utilisateur(user):
                 print("Un administrateur existe déjà.")
                 return
 
-        # =========================
-        # CHECK EMAIL UNIQUE
-        # =========================
         cursor.execute("""
             SELECT id FROM users WHERE email = ?
         """, (user.email,))
@@ -87,9 +76,6 @@ def ajouter_utilisateur(user):
             print("Email déjà utilisé.")
             return
 
-        # =========================
-        # INSERT USER
-        # =========================
         cursor.execute("""
             INSERT INTO users (name, email, password, role)
             VALUES (?, ?, ?, ?)
@@ -102,9 +88,6 @@ def ajouter_utilisateur(user):
 
         user_id = cursor.lastrowid
 
-        # =========================
-        # SI ETUDIANT → CREATION STUDENT
-        # =========================
         if user.role == "etudiant":
 
             print("\n--- Infos étudiant ---")
@@ -147,9 +130,7 @@ def ajouter_utilisateur(user):
         conn.close()
 
 
-# =========================================================
-# SUPPRESSION UTILISATEUR
-# =========================================================
+
 def supprimer_utilisateur(email):
 
     conn = get_connection()
@@ -181,9 +162,7 @@ def supprimer_utilisateur(email):
         conn.close()
 
 
-# =========================================================
-# LISTE UTILISATEURS
-# =========================================================
+
 def lister_utilisateurs():
 
     conn = get_connection()

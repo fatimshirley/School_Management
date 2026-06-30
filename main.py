@@ -43,7 +43,7 @@ def create_default_admin():
 
 
 create_tables()
-create_default_admin()  
+create_default_admin() 
 
 user_connecte = login()
 
@@ -110,3 +110,4 @@ elif user_connecte["role"] == "admin":
 
         else:
             print("Choix invalide")
+

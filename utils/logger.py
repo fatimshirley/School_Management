@@ -1,7 +1,7 @@
 
 import logging
 
-#configuration du système de logs
+#configuration du système de logs(journalisation(enregistre les traces de toutes operations))
 logging.basicConfig(
     filename="logs/school.log",#fichier ou les logs seront stockés
     level=logging.INFO,#niveau des logs (INFO, WARNING, ERROR)
